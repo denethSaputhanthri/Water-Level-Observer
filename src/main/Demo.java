@@ -1,4 +1,5 @@
 package main;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.plaf.SliderUI;
 
@@ -14,7 +15,7 @@ class Display{
 }
 class SMSsender{
     public void sendSMS(int waterLevel){
-        System.out.println("Water Level..."+waterLevel);
+        System.out.println("WETER Level..."+waterLevel);
     }
 }
 class Splitter{
@@ -23,24 +24,24 @@ class Splitter{
     }
 }
 class ControlRoom{
-    private Alarm alarm;
-    private Display display;
-    private SMSsender sMSsender;
-    private Splitter splitter;
+    private ArrayList<Alarm> alarmList=new ArrayList<>();
+    private ArrayList<Display> displayList=new ArrayList<>();
+    private ArrayList<SMSsender> sMSsenderList=new ArrayList<>();
+    private ArrayList<Splitter> splitterList=new ArrayList<>();
     
     private int waterLevel;
     
     public void addSplitter(Splitter splitter){
-        this.splitter=splitter;
+        splitterList.add(splitter);
     }
     public void addAlarm(Alarm alarm){
-        this.alarm=alarm;
+        alarmList.add(alarm);
     }
     public void addDisplay(Display display){
-        this.display=display;
+        displayList.add(display);
     }
     public void addSMSsender(SMSsender sMSsender){
-        this.sMSsender=sMSsender;
+        sMSsenderList.add(sMSsender);
     }
     
     public void setWaterLevel(int waterLevel){
@@ -50,18 +51,30 @@ class ControlRoom{
         notifyDevices();
     }
     public void notifyDevices(){
-        alarm.operateAlram(waterLevel);
-        display.display(waterLevel);
-        sMSsender.sendSMS(waterLevel);
-        splitter.splitter(waterLevel);
+        for (Alarm alarm : alarmList) {
+            alarm.operateAlram(waterLevel);
+        }
+        for (Display display : displayList) {
+            display.display(waterLevel);
+        }
+        for (SMSsender seMSsender : sMSsenderList) {
+            seMSsender.sendSMS(waterLevel);
+        }
+        for (Splitter splitter : splitterList) {
+            splitter.splitter(waterLevel);
+        }
     }
 }
 public class Demo {
      public static void main(String[] args) throws InterruptedException {
         ControlRoom controlRoom=new ControlRoom();
         controlRoom.addAlarm(new Alarm());
+        controlRoom.addAlarm(new Alarm());
+        controlRoom.addDisplay(new Display());
+        controlRoom.addDisplay(new Display());
         controlRoom.addDisplay(new Display());
         controlRoom.addSMSsender(new SMSsender());
+        controlRoom.addSplitter(new Splitter());
         controlRoom.addSplitter(new Splitter());
         
         Random r= new Random();
