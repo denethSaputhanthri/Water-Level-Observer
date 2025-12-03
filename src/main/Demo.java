@@ -1,5 +1,6 @@
 package main;
 import java.util.Random;
+import javax.swing.plaf.SliderUI;
 
 class Alarm{
     public void operateAlram(int waterLevel){
@@ -16,14 +17,22 @@ class SMSsender{
         System.out.println("Water Level..."+waterLevel);
     }
 }
-
+class Splitter{
+    public void splitter(int waterLevel){
+        System.out.println(waterLevel>=75 ?"Spliter ON" :"Splitter OFF");
+    }
+}
 class ControlRoom{
     private Alarm alarm;
     private Display display;
     private SMSsender sMSsender;
+    private Splitter splitter;
     
     private int waterLevel;
     
+    public void addSplitter(Splitter splitter){
+        this.splitter=splitter;
+    }
     public void addAlarm(Alarm alarm){
         this.alarm=alarm;
     }
@@ -44,6 +53,7 @@ class ControlRoom{
         alarm.operateAlram(waterLevel);
         display.display(waterLevel);
         sMSsender.sendSMS(waterLevel);
+        splitter.splitter(waterLevel);
     }
 }
 public class Demo {
@@ -52,6 +62,7 @@ public class Demo {
         controlRoom.addAlarm(new Alarm());
         controlRoom.addDisplay(new Display());
         controlRoom.addSMSsender(new SMSsender());
+        controlRoom.addSplitter(new Splitter());
         
         Random r= new Random();
         while (true) {            
@@ -59,6 +70,5 @@ public class Demo {
             controlRoom.setWaterLevel(waterLevel);
             Thread.sleep(1000);
         }
- 
     }
 }
