@@ -48,11 +48,3 @@
 4.  Connect your Arduino to the PC and select the correct Board and COM Port.
 5.  **Upload** the code.
 6.  Assemble the circuit according to the pin definitions in the code.
-
-## 🤝 Contributing
-
-Contributions are welcome! If you have ideas for adding WiFi notification (IoT) features or mobile app integration, feel free to fork the repo and submit a pull request.
-
-## 📄 License
-
-This project is open-source and available under the MIT License.
